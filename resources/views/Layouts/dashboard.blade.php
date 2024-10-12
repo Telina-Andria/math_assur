@@ -118,7 +118,8 @@
                     <img src="/api/placeholder/100/30" alt="Logo" height="30">
                 </div>
                 <div class="col text-center">
-                    <span>&copy; 2024 Votre Entreprise. Tous droits réservés.</span>
+                    <span>&copy; 2024 Math Assurance. Tous droits réservés.</span>
+                    <span>&copy; ANDRIANARIMANANA Telina Arintsoa</span>
                 </div>
                 <div class="col-auto">
                     <a href="#" class="text-muted me-2">Mentions légales</a>
