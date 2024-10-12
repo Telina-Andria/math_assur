@@ -35,7 +35,7 @@
                                     href="{{ route('contrat.show', $sinistre->contrat) }}">{{ $sinistre->contrat->numero_contrat ?? 'Non assigné' }}</a>
                             </td>
                             <td>{{ number_format($sinistre->montant_indemnise, 2, ',', ' ') }} Ar</td>
-                            <td>{{ $sinistre->utilisateur->nom_utilisateur ?? 'Non assigné' }}</td>
+                            <td>{{ $sinistre->contrat->utilisateur->nom_utilisateur }}</td>
                             <td>
                                 <a href="{{ route('sinistre.show', $sinistre) }}" class="btn btn-info btn-sm"
                                     title="Voir">

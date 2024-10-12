@@ -55,8 +55,8 @@
 
                         <hr>
 
-                        <h5>Utilisateur responsable</h5>
-                        <p><strong>Nom d'utilisateur :</strong> {{ $sinistre->utilisateur->nom_utilisateur }}</p>
+                        <h5>Responsable</h5>
+                        <p><strong>Nom d'utilisateur :</strong> {{ $sinistre->contrat->utilisateur->nom_utilisateur }}</p>
 
                     </div>
                 </div>

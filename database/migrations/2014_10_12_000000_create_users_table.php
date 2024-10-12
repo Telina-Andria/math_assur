@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('nom_utilisateur');
             $table->string('mot_de_passe');
-            $table->integer('role');
+            $table->integer('role'); // 0 : Administrateur, 1: Direction, 2: Agent
             $table->timestamps();
         });
     }

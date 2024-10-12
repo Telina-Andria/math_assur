@@ -23,7 +23,9 @@ use App\Http\Controllers\SinistreController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get("/home", [IndexController::class, "index"]);
+
+// Redirection de /home vers /dashboard
+Route::redirect('/home', '/dashboard');
 
 
 //Authentification

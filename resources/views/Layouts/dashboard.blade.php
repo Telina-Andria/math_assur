@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="{{ asset('bs5/css/bootstrap.min.css') }}">
-    {{-- <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet"> --}}
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         body {
@@ -37,7 +36,16 @@
                 <img src="/api/placeholder/150/50" alt="Logo" height="30" class="d-inline-block align-text-top">
             </a>
             <div class="d-flex align-items-center">
-                <span class="me-2">{{ Auth::user()->nom_utilisateur }}</span>
+                <span class="badge bg-primary me-2">
+                    {{ Auth::user()->nom_utilisateur }}
+                    @if (Auth::user()->role == 0)
+                        (Administrateur)
+                    @elseif(Auth::user()->role == 1)
+                        (Direction)
+                    @else
+                        (Agent)
+                    @endif
+                </span>
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
                         data-bs-toggle="dropdown" aria-expanded="false">

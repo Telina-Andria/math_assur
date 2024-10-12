@@ -41,7 +41,16 @@ class SinistrePolicy
      */
     public function update(User $user, Sinistre $sinistre): bool
     {
-        return $user->id == $sinistre->contrat->by_utilisateur_id;
+        if ($user->role == 0) {
+            // Le rôle 0 peut mettre à jour tous les sinistres
+            return true;
+        } elseif ($user->role == 1) {
+            // Le rôle 1 peut mettre à jour les sinistres des rôles 1 et 2
+            return $sinistre->contrat->utilisateur->role >= 1;
+        } elseif ($user->role == 2) {
+            // Le rôle 2 ne peut mettre à jour que ses propres contrats
+            return $sinistre->by_utilisateur_id == $user->id;
+        }
     }
 
     /**
@@ -49,7 +58,16 @@ class SinistrePolicy
      */
     public function delete(User $user, Sinistre $sinistre): bool
     {
-        return $user->id == $sinistre->contrat->by_utilisateur_id;
+        if ($user->role == 0) {
+            // Le rôle 0 peut supprimer tous les sinistres
+            return true;
+        } elseif ($user->role == 1) {
+            // Le rôle 1 peut supprimer les sinistres des rôles 1 et 2
+            return $sinistre->contrat->utilisateur->role >= 1;
+        } elseif ($user->role == 2) {
+            // Le rôle 2 ne peut supprimer que ses propres contrats
+            return $sinistre->by_utilisateur_id == $user->id;
+        }
     }
 
     /**
