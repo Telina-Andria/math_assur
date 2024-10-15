@@ -47,12 +47,12 @@ class SinistreController extends Controller
             'description' => 'required'
         ]);
 
-        $validatedData["by_utilisateur_id"] = Auth::user()->id;
+        $validatedData["responsable_id"] = Auth::user()->id;
         $validatedData["by_contrat_id"] = $contrat->id;
 
         Sinistre::create($validatedData);
 
-        return redirect()->route('sinistre.index')->with('success', 'Sinistre créé avec succès.');
+        return redirect()->route('contrat.show', $contrat)->with('success', 'Sinistre créé avec succès.');
     }
 
     /**
@@ -97,8 +97,29 @@ class SinistreController extends Controller
      */
     public function destroy(Sinistre $sinistre)
     {
+        $contrat = $sinistre->contrat;
         $sinistre->delete();
 
-        return redirect('/sinistre')->with('success', 'Sinistre deleted');
+        return redirect()->route('contrat.show', $contrat)->with('success', 'Sinistre deleted');
+    }
+
+    //valider la sinistre
+    public function valider(Sinistre $sinistre)
+    {
+        $this->authorize('valider', $sinistre);
+        $data["status"] = "valider";
+        $data["validateur_id"] = Auth::user()->id;
+        $sinistre->update($data);
+
+        return redirect()->route('sinistre.show', $sinistre)->with('Succes', 'Sinistre Valider');
+    }
+    public function refuser(Sinistre $sinistre)
+    {
+        $this->authorize('refuser', $sinistre);
+        $data["status"] = "refuser";
+        $data["validateur_id"] = Auth::user()->id;
+        $sinistre->update($data);
+
+        return redirect()->route('sinistre.show', $sinistre)->with('Succes', 'Sinistre Valider');
     }
 }

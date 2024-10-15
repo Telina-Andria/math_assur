@@ -5,12 +5,16 @@
         <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
             <h1 class="h2">Détails du Contrat</h1>
             <div class="btn-toolbar mb-2 mb-md-0">
-                <a href="{{ route('contrat.edit', $contrat) }}" class="btn btn-sm btn-outline-primary ml-2">
-                    <i class="fas fa-edit"></i> Modifier
-                </a>
+                @if (Auth::user()->can('update', $contrat))
+                    <a href="{{ route('contrat.edit', $contrat) }}" class="btn btn-sm btn-outline-primary ml-2">
+                        <i class="fas fa-edit"></i> Modifier
+                    </a>
+                @endif
+
                 <a href="{{ route('sinistre.create', $contrat) }}" class="btn btn-sm btn-outline-primary ml-2">
                     <i class="fas fa-exclamation-triangle"></i> Nouvelle Sinistre
                 </a>
+
             </div>
         </div>
 
@@ -118,8 +122,10 @@
                             <td>{{ number_format($sinistre->montant_indemnise, 2) }} Ar</td>
                             <td>
                                 <a href="{{ route('sinistre.show', $sinistre) }}" class="btn btn-sm btn-info">Voir</a>
-                                <a href="{{ route('sinistre.edit', $sinistre) }}"
-                                    class="btn btn-sm btn-warning">Modifier</a>
+                                @if (Auth::user()->can('update', $sinistre))
+                                    <a href="{{ route('sinistre.edit', $sinistre) }}"
+                                        class="btn btn-sm btn-warning">Modifier</a>
+                                @endif
                             </td>
                         </tr>
                     @empty

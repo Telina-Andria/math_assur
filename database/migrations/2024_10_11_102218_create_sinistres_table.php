@@ -17,8 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('numero_sinistre');
             $table->decimal('montant_indemnise', 15, 2);
-            $table->foreignIdFor(User::class, "by_utilisateur_id")->constrained('users');
+            $table->foreignIdFor(User::class, "responsable_id")->constrained('users');
+            $table->foreignIdFor(User::class, "validateur_id")->nullable()->constrained('users');
             $table->foreignIdFor(Contrat::class, "by_contrat_id")->constrained('contrats');
+            $table->text('description');
+            $table->enum('status', ['en cours', 'valider', 'refuser']);
             $table->timestamps();
         });
     }
@@ -28,6 +31,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('sinistres');
+        Schema::dropColumns('sinistres', ["numero_sinistre", "montant_indemnise", "responsable_id", "validateur_id", "by_contrat_id", "description", "status"]);
     }
 };

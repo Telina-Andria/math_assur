@@ -47,4 +47,6 @@ Route::middleware(["auth", "disableBackBtn"])->group(function () {
     Route::resource('sinistre', SinistreController::class)->except(["create", "store"]);
     Route::get('/sinistre/create/{contrat}', [SinistreController::class, "create"])->name('sinistre.create');
     Route::post('/sinistre/{contrat}', [SinistreController::class, "store"])->name('sinistre.store');
+    Route::get('/sinistre/{sinistre}/valider', [SinistreController::class, "valider"])->name('sinistre.valider');
+    Route::get('/sinistre/{sinistre}/refuser', [SinistreController::class, "refuser"])->name('sinistre.refuser');
 });

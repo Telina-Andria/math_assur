@@ -22,6 +22,8 @@
                         <th>Contrat</th>
                         <th>Montant indemnisé</th>
                         <th>Responsable</th>
+                        <th>Status </th>
+                        <th>Validateur</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -36,15 +38,19 @@
                             </td>
                             <td>{{ number_format($sinistre->montant_indemnise, 2, ',', ' ') }} Ar</td>
                             <td>{{ $sinistre->contrat->utilisateur->nom_utilisateur }}</td>
+                            <td>{{ $sinistre->status }}</td>
+                            <td>{{ $sinistre->validateur->nom_utilisateur ?? 'en cours' }}</td>
                             <td>
                                 <a href="{{ route('sinistre.show', $sinistre) }}" class="btn btn-info btn-sm"
                                     title="Voir">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('sinistre.edit', $sinistre) }}" class="btn btn-warning btn-sm"
-                                    title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                @if (Auth::user()->can('update', $sinistre))
+                                    <a href="{{ route('sinistre.edit', $sinistre) }}" class="btn btn-warning btn-sm"
+                                        title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                @endif
 
                             </td>
                         </tr>

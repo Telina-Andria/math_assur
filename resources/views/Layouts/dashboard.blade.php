@@ -32,8 +32,11 @@
     <!-- Header -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="{{ route('dashboard') }}">
-                <img src="/api/placeholder/150/50" alt="Logo" height="30" class="d-inline-block align-text-top">
+            <a class="navbar-brand d-flex align-items-center gap-2" href="{{ route('dashboard') }}"
+                style="text-decoration: none;">
+                <img src="{{ asset('images/logo.webp') }}" alt="Logo" height="50" class="d-inline-block"
+                    style="border-radius: 8px;">
+                <span class="fw-bold fs-4 text-primary">Math Assurance</span>
             </a>
             <div class="d-flex align-items-center">
                 <span class="badge bg-primary me-2">
@@ -87,20 +90,15 @@
                                 Liste des contrats
                             </a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('sinistre.index') }}">
-                                <i class="fas fa-exclamation-triangle me-2"></i>
-                                Liste des sinistres
-                            </a>
-                        </li>
-                        @if (Auth::user()->role == 0)
+                        @if (Auth::user()->role <= 1)
                             <li class="nav-item">
-                                <a class="nav-link" href="#">
-                                    <i class="fas fa-users me-2"></i>
-                                    Liste des Employees
+                                <a class="nav-link" href="{{ route('sinistre.index') }}">
+                                    <i class="fas fa-exclamation-triangle me-2"></i>
+                                    Liste des sinistres
                                 </a>
                             </li>
                         @endif
+
                     </ul>
                 </div>
             </nav>
@@ -115,7 +113,7 @@
         <div class="container-fluid">
             <div class="row align-items-center h-100">
                 <div class="col-auto">
-                    <img src="/api/placeholder/100/30" alt="Logo" height="30">
+                    <img src="{{ asset('images/logo.webp') }}" alt="Logo" height="30">
                 </div>
                 <div class="col text-center">
                     <span>&copy; 2024 Math Assurance. Tous droits réservés.</span>
@@ -131,6 +129,3 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 </body>
-
-
-{{-- <h1>Sidebar</h1> --}}

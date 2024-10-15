@@ -45,10 +45,12 @@
                                 <a href="{{ route('contrat.show', $contrat) }}" class="btn btn-info btn-sm" title="Voir">
                                     <i class="fas fa-eye"></i>
                                 </a>
-                                <a href="{{ route('contrat.edit', $contrat) }}" class="btn btn-warning btn-sm"
-                                    title="Modifier">
-                                    <i class="fas fa-edit"></i>
-                                </a>
+                                @if (Auth::user()->can('update', $contrat))
+                                    <a href="{{ route('contrat.edit', $contrat) }}" class="btn btn-warning btn-sm"
+                                        title="Modifier">
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                @endif
 
                             </td>
                         </tr>

@@ -14,7 +14,7 @@ class SinistrePolicy
      */
     public function viewAny(User $user): bool
     {
-        return true;
+        return $user->role <= 1;
     }
 
     /**
@@ -33,7 +33,13 @@ class SinistrePolicy
         // Nous n'avons pas accès directement au Contrat ici, donc nous devons le récupérer via la requete
         $contrat = request()->route('contrat');
 
-        return $user->id == $contrat->by_utilisateur_id;
+        if ($user->role == 0) {
+            return true;
+        } elseif ($user->role == 1) {
+            return $contrat->utilisateur->role >= 1;
+        } elseif ($user->role == 2) {
+            return $user->id == $contrat->by_utilisateur_id;
+        }
     }
 
     /**
@@ -43,13 +49,13 @@ class SinistrePolicy
     {
         if ($user->role == 0) {
             // Le rôle 0 peut mettre à jour tous les sinistres
-            return true;
+            return $sinistre->status == 'en cours';
         } elseif ($user->role == 1) {
             // Le rôle 1 peut mettre à jour les sinistres des rôles 1 et 2
-            return $sinistre->contrat->utilisateur->role >= 1;
+            return ($sinistre->contrat->utilisateur->role >= 1 && $sinistre->status == 'en cours');
         } elseif ($user->role == 2) {
             // Le rôle 2 ne peut mettre à jour que ses propres contrats
-            return $sinistre->by_utilisateur_id == $user->id;
+            return $sinistre->responsable_id == $user->id && $sinistre->status == 'en cours';
         }
     }
 
@@ -66,7 +72,7 @@ class SinistrePolicy
             return $sinistre->contrat->utilisateur->role >= 1;
         } elseif ($user->role == 2) {
             // Le rôle 2 ne peut supprimer que ses propres contrats
-            return $sinistre->by_utilisateur_id == $user->id;
+            return $sinistre->responsable_id == $user->id;
         }
     }
 
@@ -84,5 +90,17 @@ class SinistrePolicy
     public function forceDelete(User $user, Sinistre $sinistre): bool
     {
         return false;
+    }
+
+    //valider sinistre
+    public function valider(User $user, Sinistre $sinistre)
+    {
+        return $user->role <= 1 && $sinistre->status == 'en cours';
+    }
+
+    //refuser sinistre
+    public function refuser(User $user, Sinistre $sinistre)
+    {
+        return $user->role <= 1 && $sinistre->status == 'en cours';
     }
 }

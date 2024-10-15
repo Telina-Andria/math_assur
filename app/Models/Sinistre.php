@@ -14,7 +14,8 @@ class Sinistre extends Model
     protected $fillable = [
         "numero_sinistre",
         "montant_indemnise",
-        "by_utilisateur_id",
+        "responsable_id",
+        "validateur_id",
         "by_contrat_id",
         "description",
         "status"
@@ -28,11 +29,18 @@ class Sinistre extends Model
         );
     }
 
-    public function utilisateur(): BelongsTo
+    public function responsable(): BelongsTo
     {
         return $this->belongsTo(
             User::class,
-            "by_utilisateur_id"
+            "responsable_id"
+        );
+    }
+    public function validateur(): BelongsTo
+    {
+        return $this->belongsTo(
+            User::class,
+            "validateur_id"
         );
     }
 }

@@ -38,7 +38,12 @@
                 <textarea class="form-control" id="description" name="description" rows="3">{{ old('description', $sinistre->description) }}</textarea>
             </div>
 
-            <button type="submit" class="btn btn-primary">Mettre à jour le sinistre</button>
+            <div class="row mt-3">
+                <div class="col-md-12">
+                    <button type="submit" class="btn btn-primary">Mettre à jour le contrat</button>
+                    <a href="{{ url()->previous() }}" class="btn btn-secondary">Annuler</a>
+                </div>
+            </div>
         </form>
     </main>
 @endsection
